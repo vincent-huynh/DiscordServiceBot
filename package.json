@@ -1,0 +1,16 @@
+{
+  "name": "cintaybot",
+  "version": "1.0.0",
+  "description": "A bot for all of Cintay's services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vincent",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "discord.js": "^12.5.1",
+    "eslint": "^7.17.0"
+  }
+}
