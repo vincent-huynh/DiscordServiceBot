@@ -35,7 +35,11 @@ async function getStatus(message) {
                     text: 'This server is whitelisted. Message Cintay if interested.',
                 },
             };
-
+            if (!online) {
+                message.client.users.fetch('162694154525081602').then((user) => {
+                    user.send(`Minecraft Server is down :( Link: ${message.url}`);
+                });
+            }
             message.channel.send({ embed: serverStatusEmbed });
         }
 
