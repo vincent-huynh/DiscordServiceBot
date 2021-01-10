@@ -3,13 +3,7 @@ const { mcapi, minecraftserverip } = require('../config.json');
 
 async function getStatus(message) {
     try {
-        message.channel.send('Fetching data...').then(sentMessage => {
-            try {
-                sentMessage.delete(5000);
-            } catch(err) {
-                console.error(err);
-            }
-        });
+        message.channel.send('Fetching data...');
         const response = await axios.get(mcapi + minecraftserverip);
         if (response) {
             const { data } = response;
