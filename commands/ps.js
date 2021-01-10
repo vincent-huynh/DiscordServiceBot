@@ -38,7 +38,7 @@ function plexSearch(message, args) {
                     name: 'Cintay\'s Service Bot',
                     icon_url: 'https://imgur.com/l6LumOx.png',
                 },
-                description: `You can request this with \`$c pr ${queryTerm}\``,
+                description: `You can request this with \`%c pr ${queryTerm}\``,
                 thumbnail: {
                     url: 'https://imgur.com/t2EQfeV.png',
                 },

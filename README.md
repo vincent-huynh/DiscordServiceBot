@@ -1,6 +1,6 @@
 # Discord Service Bot
 
-This is a Discord Service Bot I built to check up on some of the cool service I run for my friends. This bot allows my friends, who primarily use Discord to communicate, to check the statuses of my Minecraft and Plex servers. In addition, there are commands that allow my friends to check if a certain media (movie, tv show, etc.) is already on my Plex server `$c ps <MEDIA TITLE>` or make a request if it isn't `$c pr <MEDIA TITLE>`.
+This is a Discord Service Bot I built to check up on some of the cool service I run for my friends. This bot allows my friends, who primarily use Discord to communicate, to check the statuses of my Minecraft and Plex servers. In addition, there are commands that allow my friends to check if a certain media (movie, tv show, etc.) is already on my Plex server `%c ps <MEDIA TITLE>` or make a request if it isn't `%c pr <MEDIA TITLE>`.
 
 In case a user is making a request, I used TheMovieDB's API to search for the title they asked for. This helps narrow down to the proper media they are referring to. Using Discord reactions, the user can shift through the top 5 results of this search, then select the relevant media using the reaction emojis (1 - 5). This sends me a DM with the relevant embed and a link to the request (so that I can confirm if its accuracy).
 
