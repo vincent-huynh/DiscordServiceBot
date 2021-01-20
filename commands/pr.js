@@ -41,7 +41,8 @@ async function plexRequest(message, args) {
             .setAuthor('Cintay\'s Service Bot', 'https://imgur.com/l6LumOx.png')
             .setDescription(`Search results for "${desc}"`)
             .setThumbnail('https://imgur.com/t2EQfeV.png')
-            .addField(`${med.title} (${med.release_date})`, `${med.overview || 'No available description'}`)
+            .addField(`${med.media_type === 'movie' ? med.title : med.media_type === 'tv' ? med.name : desc} (${med.media_type === 'movie' ? med.release_date : med.media_type === 'tv' ? med.first_air_date : ''})`, 
+            `${med.overview || 'No available description'}`)
             .setImage(`${imgURL}${med.poster_path}`)
             .setFooter(`Want in on Plex? Message @cintay#2857 for info. | Page ${index + 1}/${trimmedSearch.length}`)
         ));
