@@ -1,48 +1,71 @@
 const axios = require('axios').default;
-const { mcapi, minecraftserverip } = require('../config.json');
+const { minecraftserverip } = require('../config.json');
+const mcping = require('mcping-js');
 
+const mcserver = new mcping.MinecraftServer(minecraftserverip, 25565);
+const timeout = 1000;
+const versionNumber = 754;
 async function getStatus(message) {
     try {
         message.channel.send('Fetching data...');
-        const response = await axios.get(mcapi + minecraftserverip);
-        if (response) {
-            const { data } = response;
-            const { online, players, version, hostname } = data;
-
-            const serverStatusEmbed = {
-                color: 0x00ffff,
-                title: 'Minecraft Server Status',
-                author: {
-                    name: 'Cintay\'s Service Bot',
-                    icon_url: 'https://imgur.com/l6LumOx.png',
-                },
-                description: `Online: ${online ? 'TRUUUU' : 'nope, yikes'}`,
-                thumbnail: {
-                    url: 'https://imgur.com/t2EQfeV.png',
-                },
-                fields: [
-                    {
-                        name: `Currently Online (${players.online}):`,
-                        value: `${players.list || 'Nobody\'s Online :('}`,
-                    },
-                    {
-                        name: 'Server Info',
-                        value: `MC Version: ${version} \nIP: ${hostname}`,
-                    },
-                ],
-                timestamp: new Date(),
-                footer: {
-                    text: 'This server is whitelisted. Message Cintay if interested.',
-                },
-            };
-            if (!online) {
+        mcserver.ping(timeout, versionNumber, (err, res) => {
+            if(err) {
                 message.client.users.fetch('162694154525081602').then((user) => {
                     user.send(`Minecraft Server is down :( Link: ${message.url}`);
                 });
+                const serverStatusEmbed = {
+                    color: 0x00ffff,
+                    title: 'Minecraft Server Status',
+                    author: {
+                        name: 'Cintay\'s Service Bot',
+                        icon_url: 'https://imgur.com/l6LumOx.png',
+                    },
+                    description: 'Yikes, sent message to Cintay',
+                    thumbnail: {
+                        url: 'https://imgur.com/t2EQfeV.png',
+                    },
+                    timestamp: new Date(),
+                    footer: {
+                        text: 'This server is whitelisted. Message Cintay if interested.',
+                    },
+                };
+                message.channel.send({ embed: serverStatusEmbed });
             }
-            message.channel.send({ embed: serverStatusEmbed });
-        }
+            if(res) {
 
+                const { players, version, description } = res;
+                const { max, online } = players;
+                const playerList = online > 0 ?
+                players.sample.map(player => player.name) : false;
+                const serverStatusEmbed = {
+                    color: 0x00ffff,
+                    title: 'Minecraft Server Status',
+                    author: {
+                        name: 'Cintay\'s Service Bot',
+                        icon_url: 'https://imgur.com/l6LumOx.png',
+                    },
+                    description: 'Online: TRUUUU',
+                    thumbnail: {
+                        url: 'https://imgur.com/t2EQfeV.png',
+                    },
+                    fields: [
+                        {
+                            name: `Currently Online (${online}/${max}):`,
+                            value: `${playerList || 'Nobody\'s Online :('}`,
+                        },
+                        {
+                            name: 'Server Info',
+                            value: `MC Version: ${version.name}\n${description.text}`,
+                        },
+                    ],
+                    timestamp: new Date(),
+                    footer: {
+                        text: 'This server is whitelisted. Message Cintay if interested.',
+                    },
+                };
+                message.channel.send({ embed: serverStatusEmbed });
+            }
+        });
     } catch (err) {
         console.error(err);
     }
