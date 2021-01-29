@@ -1,5 +1,5 @@
 const MAX_TITLE_LEN = 10;
-async function storeSNT(message, args) {
+function storeSNT(message, args) {
     console.log('Message: ');
     console.log(message);
     console.log('-------------------------------------------------------');
@@ -12,11 +12,19 @@ async function storeSNT(message, args) {
     console.log('Attachments:')
     console.log(message.attachments);
     
-    await sntRegister(message);
+    sntRegister(message);
 }
 
-const sntRegister = async function(message) {
-    let sntTitle;
+// Work on API first
+// Make sure you can upload a discord CDN image, download it, and store it in S3
+// Then make sure you gather all the relevant information
+// and THEN use the API to make a call and add all of that at once
+// Only then can you start working on this (once you get all the API above working)
+
+const sntRegister = function(message) {
+    let sntReg = {
+        title,
+    }
     message.channel.send('Please enter a title for your show and tell')
         .then((msg) => {
             msg.channel.awaitMessages(response => response.content, {
@@ -27,40 +35,12 @@ const sntRegister = async function(message) {
                 console.log('-------------------------------------------------------');
                 console.log('Collected:')
                 console.log(collected);
-                sntTitle = collected.first().content;
-                while (sntTitle.length > MAX_TITLE_LEN) {
-                    message.channel.send('Please enter a title for your show and tell')
-                        .then((msg) => {
-                            msg.channel.awaitMessages(response => response.content, {
-                                max: 1,
-                                time: 5000,
-                                errors: ['time'],
-                            }).then((collected) => {
-                                console.log('-------------------------------------------------------');
-                                console.log('Collected:')
-                                console.log(collected);
-                                sntTitle = collected.first().content;
-                                msg.channel.send(`Your title: ${sntTitle}`);
-                            }).catch(() => {
-                                msg.channel.send('Something went wrong, I think.')
-                            });
-                        })
-                }
-                msg.channel.send(`Your title: ${sntTitle}`);
+                sntReg.title = collected.first().content;
             }).catch(() => {
-                msg.channel.send('You took too long. Think of a title, then try to register again!')
-            });
-            
-        });
-}
-
-const reqTitle = function(message) {
-    // Make a function here to get the title
-    // Make it return either the title
-    // or an error code (int? number?)
-    // if error, make the calling function call this again until
-    // we get the right error
-    
+                msg.channel.send('You took too long. Think of a title, then try to register again!');
+            })
+        })
+    return sntReg;
 }
 
 module.exports = {
