@@ -1,3 +1,5 @@
+const { prefix } = require('../config.json');
+
 function help(message) {
     const helpEmbed = {
         color: 0x00ffff,
@@ -12,23 +14,23 @@ function help(message) {
         },
         fields: [
             {
-                name: '%c mcstatus',
+                name: `${prefix} mcstatus`,
                 value: 'Checks if the server is down and shows players currently online.',
             },
             {
-                name: '%c modlist',
+                name: `${prefix} modlist`,
                 value: 'Displays all of the mods currently on the server.',
             },
             {
-                name: '%c plexstatus',
+                name: `${prefix} plexstatus`,
                 value: 'Checks if Plex is online',
             },
             {
-                name: '%c ps <MEDIA TITLE>',
-                value: 'Checks if a certain media is already on the Plex server. \nExample: `%c ps Captain America`',
+                name: `${prefix} ps <MEDIA TITLE>`,
+                value: `Checks if a certain media is already on the Plex server. \nExample: ${prefix} ps Captain America`,
             },
             {
-                name: '%c pr <MEDIA TITLE>',
+                name: `${prefix} pr <MEDIA TITLE>`,
                 value: 'Make a Plex request. Use the reactions to browse through possible options, then click on a reaction to choose the media you want added. **Please check if it\'s on Plex already with** `%c ps`',
             },
         ],
